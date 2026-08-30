@@ -12,7 +12,7 @@
 
 ---
 
-## 🚀 About Me
+## 🚀 About my projects
 
 ```javascript
 const developer = {

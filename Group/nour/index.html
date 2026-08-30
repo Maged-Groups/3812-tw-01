@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/glopal.css" />
+
+    <title>كاشير</title>
+  </head>
+  <body>
+    <script src="assets/js/script.js"></script>
+    <header
+      class="bg-primary-dark shadow-lg flex flex-row items-center justify-between text-white py-2.5 px-5.5 font-cairo"
+    >
+      <div class="flex gap-2.5 items-center">
+        <div
+          class="bg-accent gap-2.5 rounded-xl flex text-primary-dark font-black items-center justify-center text-lg w-8.5 h-8.5"
+        >
+          ك
+        </div>
+        <div class="text-lg font-bold">كاشير البقالة</div>
+      </div>
+      <div class="flex p-1 gap-1.5 rounded-xl bg-glass cursor-pointer">
+        <button
+          id="first"
+          class="py-2 px-4.5 rounded-lg font-semibold text-sm tab"
+          onclick="changeTabs(first, casher)"
+        >
+          الكاشير
+        </button>
+        <button
+          id="scound"
+          class="py-2 px-4.5 rounded-lg font-semibold text-sm"
+          onclick="changeTabs(scound, inventory)"
+        >
+          المخزون
+        </button>
+        <button
+          id="thered"
+          class="py-2 px-4.5 rounded-lg font-semibold text-sm"
+          onclick="changeTabs(thered, repots)"
+        >
+          التقارير
+        </button>
+      </div>
+      <div id="time"></div>
+    </header>
+    <!-- الكاشير -->
+    <div
+      id="casher"
+      class="section pt-4.5 px-5.5 pb-10 my-0 mx-auto min-h-full bg-bg gap-4.5 flex flex-col lg:flex-row"
+    >
+      <!-- right -->
+      <div class="flex-1 bg-surface rounded-lg shadow-lg p-4">
+        <div>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="ابحث بالاسم أو الكود..."
+            class="flex-1 py-3 px-3.5 border-[1.5px] rounded-lg text-[15px] gap-2.5 border-line w-full"
+          />
+        </div>
+        <div class="gap-2 mb-3.5 flex-wrap my-3.5 cursor-pointer">
+          <button
+            class="py-1.5 px-3.5 rounded-3xl bg-primary-tint text-primary-dark text-[13px] font-semibold border-[1.5px] border-transparent activeChip chip"
+            onclick="changeChips(this)"
+          >
+            الكل
+          </button>
+          <button
+            class="py-1.5 px-3.5 rounded-3xl bg-primary-tint text-primary-dark text-[13px] font-semibold border-[1.5px] border-transparent chip"
+            onclick="changeChips(this)"
+          >
+            مواد غذائية
+          </button>
+          <button
+            class="py-1.5 px-3.5 rounded-3xl bg-primary-tint text-primary-dark text-[13px] font-semibold border-[1.5px] border-transparent chip"
+            onclick="changeChips(this)"
+          >
+            مشروبات
+          </button>
+          <button
+            class="py-1.5 px-3.5 rounded-3xl bg-primary-tint text-primary-dark text-[13px] font-semibold border-[1.5px] border-transparent chip"
+            onclick="changeChips(this)"
+          >
+            مخبوزات
+          </button>
+          <button
+            class="py-1.5 px-3.5 rounded-3xl bg-primary-tint text-primary-dark text-[13px] font-semibold border-[1.5px] border-transparent chip"
+            onclick="changeChips(this)"
+          >
+            ألبان
+          </button>
+          <button
+            class="py-1.5 px-3.5 rounded-3xl bg-primary-tint text-primary-dark text-[13px] font-semibold border-[1.5px] border-transparent chip"
+            onclick="changeChips(this)"
+          >
+            خضار وفاكهة
+          </button>
+          <button
+            class="py-1.5 px-3.5 rounded-3xl bg-primary-tint text-primary-dark text-[13px] font-semibold border-[1.5px] border-transparent chip"
+            onclick="changeChips(this)"
+          >
+            منتجات منزلية
+          </button>
+        </div>
+        <div
+          id="cards"
+          class="gap-3 pe-1 flex flex-wrap overflow-y-auto min-h-35 max-h-[62vh]"
+        ></div>
+      </div>
+      <!-- left -->
+      <div class="bg-surface rounded-lg shadow-lg p-4 lg:w-95">
+        <div class="font-cairo justify-between items-center flex flex-row">
+          <div class="font-bold text-lg">الفاتورة الحالية</div>
+          <button class="text-danger text-xs font-bold">تفريغ السلة</button>
+        </div>
+        <div class="text-ink-soft text-center py-7.5 px-0 text-sm">
+          السلة فاضية. اختر منتج للبدء
+        </div>
+        <div
+          class="justify-between flex bg-led-bg py-4 px-5 rounded-lg my-2.5 mx-0 items-center"
+        >
+          <div class="text-text text-xs font-bold font-cairo">الإجمالي</div>
+          <div class="text-led-text font-black font-cairo text-2xl">0.00</div>
+        </div>
+        <div class="flex items-center gap-2.5 my-2.5 mx-0">
+          <label class="text-sm font-bold text-ink-soft">المدفوع</label>
+          <input
+            type="number"
+            placeholder="0.00"
+            class="flex-1 py-2.5 px-3 rounded-lg border-[1.5px] border-line text-base font-cairo font-bold text-left"
+          />
+        </div>
+        <div
+          class="justify-between flex bg-led-bg py-4 px-5 rounded-lg my-2.5 mx-0 items-center"
+        >
+          <div class="text-text text-xs font-bold font-cairo">
+            الباقي للعميل
+          </div>
+          <div class="text-led-text font-black font-cairo text-xl">0.00</div>
+        </div>
+        <button
+          disabled="true"
+          class="w-full p-3 bg-accent text-primary-dark rounded-xl font-cairo font-extrabold text-base mt-1 ease-[0.12s] disabled:bg-[#dfe4dc] disabled:text-[#93998f] cursor-not-allowed"
+        >
+          إتمام البيع وطباعة الفاتورة
+        </button>
+      </div>
+    </div>
+    <!-- المخزون -->
+    <div
+      class="section hidden px-5.5 pt-4.5 pb-10 my-0 mx-auto bg-bg"
+      id="inventory"
+    >
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="m-0 text-xl">المخزون والمنتجات</h2>
+        <button
+          class="bg-primary text-white py-2.5 px-4.5 rounded-lg font-bold text-sm"
+        >
+          +إضافة منتج
+        </button>
+      </div>
+      <!-- table -->
+      <table class="w-full bg-surface rounded-xl overflow-hidden shadow-lg">
+        <thead>
+          <tr>
+            <th>المنتج</th>
+            <th>الكود</th>
+            <th>الفئة</th>
+            <th>السعر</th>
+            <th>الكمية</th>
+            <th>الحالة</th>
+            <th>إجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="table"></tbody>
+      </table>
+    </div>
+    <!-- التقارير -->
+    <div
+      class="section hidden px-5.5 pt-4.5 pb-10 my-0 mx-auto bg-bg"
+      id="repots"
+    >
+      <h2 class="m-0 mb-4 text-xl">تقارير المبيعات</h2>
+      <div class="gap-2.5 flex items-center mb-4 flex-wrap">
+        <input
+          type="date"
+          class="py-2 bg-white px-3 border-[1.5px] border-line rounded-lg text-sm"
+        />
+        <span>إلى</span>
+        <input
+          type="date"
+          class="py-2 bg-white px-3 border-[1.5px] border-line rounded-lg text-sm"
+        />
+        <button
+          class="py-2 px-4 text-sm rounded-lg font-bold bg-primary text-white"
+        >
+          تطبيق
+        </button>
+        <button
+          class="py-2 px-4 text-sm rounded-lg font-bold bg-none text-primary-dark underline"
+        >
+          عرض الكل
+        </button>
+      </div>
+      <div class="flex flex-wrap gap-4 mb-5">
+        <div
+          class="min-w-45 flex-1 bg-surface rounded-xl shadow-lg py-4 px-4.5"
+        >
+          <div class="text-xs text-ink-soft font-bold mb-1.5">عدد الفواتير</div>
+          <div class="font-cairo font-extrabold text-2xl text-primary-dark">
+            1
+          </div>
+        </div>
+        <div
+          class="min-w-45 flex-1 bg-surface rounded-xl shadow-lg py-4 px-4.5"
+        >
+          <div class="text-xs text-ink-soft font-bold mb-1.5">
+            إجمالي المبيعات
+          </div>
+          <div class="font-cairo font-extrabold text-2xl text-primary-dark">
+            0.00ج.م
+          </div>
+        </div>
+        <div
+          class="min-w-45 flex-1 bg-surface rounded-xl shadow-lg py-4 px-4.5"
+        >
+          <div class="text-xs text-ink-soft font-bold mb-1.5">الأكثر مبيعا</div>
+          <div class="font-cairo font-extrabold text-2xl text-primary-dark">
+            أرز مصري 1 كجم
+          </div>
+        </div>
+      </div>
+      <table class="w-full bg-surface rounded-xl overflow-hidden shadow-lg">
+        <thead>
+          <tr>
+            <th>رقم الفاتورة</th>
+            <th>التاريخ والوقت</th>
+            <th>عدد العناصر</th>
+            <th>الإجمالي</th>
+            <th>إجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>INV-1787921455084</td>
+            <td>٢٨‏/٨‏/٢٠٢٦، ٣:٥٠:٥٥ م</td>
+            <td>2</td>
+            <td>97.00 ج.م</td>
+            <td>
+              <button class="text-xs font-bold py-1 px-2 text-primary-dark">
+                طباعة
+              </button>
+              <button class="text-xs font-bold py-1 px-2 text-primary-dark">
+                تصدير
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>INV-1787921455084</td>
+            <td>٢٨‏/٨‏/٢٠٢٦، ٣:٥٠:٥٥ م</td>
+            <td>2</td>
+            <td>97.00 ج.م</td>
+            <td>
+              <button class="text-xs font-bold py-1 px-2 text-primary-dark">
+                طباعة
+              </button>
+              <button class="text-xs font-bold py-1 px-2 text-primary-dark">
+                تصدير
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script>
+      const changeTabs = (btn, sce) => {
+        const allButtons = document.querySelectorAll("header button");
+        allButtons.forEach((btn) => btn.classList.remove("tab"));
+        btn.classList.add("tab");
+        const allSections = document.querySelectorAll(".section");
+        allSections.forEach((btn) => btn.classList.add("hidden"));
+        sce.classList.remove("hidden");
+      };
+      const changeChips = (chip) => {
+        const allChips = document.querySelectorAll(".chip");
+        allChips.forEach((btn) => btn.classList.remove("activeChip"));
+        chip.classList.add("activeChip");
+      };
+
+      seed.forEach((pro) => {
+        cards.innerHTML += `
+          <div
+            class="border-[1.5px] w-38 rounded-xl border-line text-center py-3 px-2.5 ease-[0.12s] hover:border-primary hover:shadow-lg hover:-translate-y-0.5"
+          >
+            <div class="font-bold text-base mb-1 min-h-9">${pro.name}</div>
+            <div class="text-xs text-ink-soft mb-1.5">المتاح :${pro.stock}</div>
+            <div class="font-cairo font-extrabold text-primary-dark text-base">
+            ${pro.price} ج.م
+            </div>
+            <button
+              class="mt-2 w-full p-2 bg-primary text-white rounded-lg font-bold text-xs"
+            >
+              اضافة للسلة
+            </button>
+          </div>
+        `;
+        const low = pro.stock <= 5;
+
+        table.innerHTML += `
+          <tr>
+            <td>${pro.name || "-"}</td>
+            <td>${pro.code || "-"}</td>
+            <td>${pro.category || "-"}</td>
+            <td>${pro.price || "-"}ج.م</td>
+            <td>${pro.stock || "-"}</td>
+            <td>
+              <div class ="${low ? "low" : "ok"}">
+                ${low ? "منخفض" : "متوفر"}
+              </div>
+            </td>
+            <td>
+              <button class="text-primary-dark text-sm font-bold py-1 px-2">
+                تعديل
+              </button>
+              <button class="text-danger text-sm font-bold py-1 px-2">
+                حذف
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+
+      function updateClock() {
+        const now = new Date();
+
+        const fullHours = now.getHours();
+
+        const hours = fullHours % 12 || 12; // Convert to 12-hour format and handle midnight
+
+        const amPm = fullHours >= 12 ? "م" : "ص"; // Determine AM/PM in Arabic
+
+        const mins = now.getMinutes();
+        const secs = now.getSeconds();
+
+        const day = now.getDate();
+        const month = now.getMonth() + 1; // Months are zero-based
+        const year = now.getFullYear();
+
+        // Turn numbers into Arabic numerals
+        const arabicHours = hours.toLocaleString("ar-EG", {
+          minimumIntegerDigits: 2,
+        });
+        const arabicMins = mins.toLocaleString("ar-EG", {
+          minimumIntegerDigits: 2,
+        });
+        const arabicSecs = secs.toLocaleString("ar-EG", {
+          minimumIntegerDigits: 2,
+        });
+        const arabicDay = day.toLocaleString("ar-EG", {
+          minimumIntegerDigits: 2,
+        });
+        const arabicMonth = month.toLocaleString("ar-EG", {
+          minimumIntegerDigits: 2,
+        });
+        const arabicYear = year.toLocaleString("ar-EG", {
+          minimumIntegerDigits: 2,
+        });
+
+        time.innerHTML = `${arabicDay}/${arabicMonth}/${arabicYear} - ${arabicHours}:${arabicMins}:${arabicSecs} ${amPm}`;
+      }
+      updateClock();
+
+      // document.getElementById("time").textContent = now.toLocaleString(
+      //   "ar-EG",
+      //   { dateStyle: "medium", timeStyle: "short", hour12: true },
+      // );
+
+      setInterval(updateClock, 1000);
+    </script>
+  </body>
+</html>

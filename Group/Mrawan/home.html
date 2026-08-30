@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mrawan Store</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
+    </style>
+
+    <link rel="stylesheet" href="output.css" />
+  </head>
+  <body class="bg-bg">
+    <!-- Navbar -->
+    <nav
+      class="py-2.5 px-5.5 bg-primary-dark text-surface flex justify-between items-center"
+    >
+      <!-- Branding -->
+      <div class="flex items-center">
+        <div
+          class="bg-accent rounded-sm w-8.5 h-8.5 flex items-center justify-center font-cairo font-black text-primary-dark text-lg"
+        >
+          ك
+        </div>
+        <h1 class="p-5.25 font-bold text-lg">كاشير البقالة</h1>
+      </div>
+
+      <!-- Navigation -->
+      <div class="flex gap-1.5 bg-glass p-1 rounded-sm">
+        <div
+          class="bg-accent text-primary-dark py-2 px-4.5 rounded-sm font-semibold text-md transition"
+        >
+          الكاشير
+        </div>
+        <div
+          class="text-secondary py-2 px-4.5 rounded-sm font-semibold text-md transition"
+        >
+          المخزون
+        </div>
+        <div
+          class="text-secondary py-2 px-4.5 rounded-sm font-semibold text-md transition"
+        >
+          التقارير
+        </div>
+      </div>
+
+      <!-- Datetime -->
+      <div class="bg-">19/8/2026 10:00م</div>
+    </nav>
+
+    <main class="p-5 justify-between items-center">
+      <div class="serach border p-2 m-6 rounded-2xl">ابحث بالاسم او الكود</div>
+      <h2 class="font-bold text-2xl">المنتجات</h2>
+
+      <aside class="m-5 flex">
+        <div
+          id="products_container"
+          class="grid grid-cols-3 gap-4 flex flex-wrap"
+        >
+          <div
+            class="products_list justify-start w-500 border-2 border-red-500 flex gap-3 flex-wrap"
+            id="products_list"
+          ></div>
+        </div>
+        
+      </aside><div class="tax border-2 p-4 rounded-2xl h-65">
+          <div class="flex justify-around">
+            <h3 class="font-bold">📜 الفاتورة</h3>
+            <button class="bg-red-600 rounded-xl p-2">مسح الفاتورة</button>
+          </div>
+          <p class="m-3">الفاتورةفارغة. اضغط علي منتج لاضافته</p>
+          <div class="calc">
+            <div class="total flex justify-around">
+              <p>الاجمالي</p>
+              <p>0.00 ج.م</p>
+            </div>
+            <div class="cash flex justify-around p-3">
+              <label class="justify-around flex" for="cash">المدفوع</label>
+              <input type="number" id="cash" name="cash" />
+            </div>
+            <div class="rest flex justify-around">
+              <p>الباقي</p>
+              <p>0.00 ج.م</p>
+            </div>
+          </div>
+        </div>
+    </main>
+    <script src="app.js"></script>
+    <script>
+      const KEY_PRODUCTS = "grocery_products_v1";
+      const products = JSON.parse(localStorage.getItem(KEY_PRODUCTS));
+      const addProduct = (product) => {
+        products_list.innerHTML += `
+<div class="products_list border-3 p-3 rounded-md w-40 m-6 border-olive-400 flex flex-col justify-between ">
+<div class="name_product font-bold ">${product.name}</div>
+<div class="price text-primary-dark font-bold">${product.price} ج.م</div>
+<div class="code"> المخزون: ${product.stock}</div>
+</div>
+`;
+      };
+      products.forEach(addProduct);
+    </script>
+  </body>
+</html>
